@@ -1,0 +1,19 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-surface);
+}
+
+.body {
+  min-height: 45vh;
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-12);
+}
+
+.body h1 {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-3);
+}
+
+.body p {
+  color: var(--color-text-secondary);
+}

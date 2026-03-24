@@ -1,0 +1,33 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.veg {
+  background: var(--color-veg-light);
+  color: #15803d;
+}
+
+.nonVeg {
+  background: var(--color-non-veg-light);
+  color: #b45309;
+}
+
+.vegan {
+  background: var(--color-vegan-light);
+  color: #7c3aed;
+}
+
+.pill {
+  background: var(--color-surface-sunken);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
