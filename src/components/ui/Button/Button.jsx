@@ -9,6 +9,8 @@ export function Button({
   fullWidth = false,
   loading = false,
   type = 'button',
+  className = '',
+  disabled = false,
   children,
   ...props
 }) {
@@ -23,10 +25,11 @@ export function Button({
         styles[safeVariant],
         styles[safeSize],
         fullWidth ? styles.fullWidth : '',
+        className,
       ]
         .filter(Boolean)
         .join(' ')}
-      disabled={loading || props.disabled}
+      disabled={loading || disabled}
       {...props}
     >
       {loading ? <span className={styles.spinner} aria-hidden="true" /> : null}
