@@ -1,11 +1,7 @@
-import './App.css'
+import { AppRouter } from './router/AppRouter'
 
 function App() {
-  return (
-    <main className="app">
-      <h1>MacroBites Web</h1>
-    </main>
-  )
+  return <AppRouter />
 }
 
 export default App

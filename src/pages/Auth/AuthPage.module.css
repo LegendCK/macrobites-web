@@ -1,0 +1,115 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--space-8) var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundShape {
+  position: absolute;
+  width: 640px;
+  height: 640px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, var(--color-primary-light), transparent 65%);
+  top: -280px;
+  right: -180px;
+  pointer-events: none;
+}
+
+.card {
+  width: min(100%, 460px);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-8);
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: var(--weight-extrabold);
+  font-size: var(--text-xl);
+  color: var(--color-dark);
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-2);
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+}
+
+.tabSwitch {
+  background: var(--color-surface-sunken);
+  border-radius: var(--radius-full);
+  padding: var(--space-1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
+}
+
+.tab {
+  height: 40px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-medium);
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+.activeTab {
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.forgotPassword {
+  border: 0;
+  background: transparent;
+  color: var(--color-primary-hover);
+  width: fit-content;
+  margin-left: auto;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.forgotPassword:hover {
+  color: var(--color-primary);
+}
+
+.error {
+  color: var(--color-error);
+  font-size: var(--text-sm);
+  margin-top: calc(var(--space-2) * -1);
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: var(--space-6);
+  }
+
+  .title {
+    font-size: var(--text-xl);
+  }
+}
