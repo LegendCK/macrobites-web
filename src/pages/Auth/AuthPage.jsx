@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/ui/Button/Button'
 import { Input } from '../../components/ui/Input/Input'
 import { useAuthStore } from '../../store/authStore'
+import { validateSignIn, validateSignUp } from '../../utils/validators/authValidators'
 import styles from './AuthPage.module.css'
 
 const TABS = {
@@ -40,21 +41,7 @@ export function AuthPage() {
     setFormData((prev) => ({ ...prev, [field]: event.target.value }))
   }
 
-  const validate = () => {
-    if (isSignUp && !formData.fullName.trim()) {
-      return 'Please enter your full name.'
-    }
-
-    if (!formData.email.trim() || !formData.email.includes('@')) {
-      return 'Please enter a valid email address.'
-    }
-
-    if (!formData.password.trim() || formData.password.trim().length < 6) {
-      return 'Password must be at least 6 characters.'
-    }
-
-    return ''
-  }
+  const validate = () => (isSignUp ? validateSignUp(formData) : validateSignIn(formData))
 
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -86,9 +73,9 @@ export function AuthPage() {
   }
 
   return (
-    <main className={styles.page}>
+    <main className={[styles.page, 'fadeInUp'].join(' ')}>
       <div className={styles.backgroundShape} aria-hidden="true" />
-      <section className={styles.card}>
+      <section className={[styles.card, 'scaleIn'].join(' ')}>
         <header className={styles.header}>
           <p className={styles.brand}>MacroBites</p>
           <h1 className={styles.title}>{title}</h1>

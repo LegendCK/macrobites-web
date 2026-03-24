@@ -47,4 +47,17 @@ export const useAuthStore = create((set) => ({
       set({ user: null, isAuthenticated: false, isLoading: false })
     }
   },
+
+  completeOnboarding: ({ onboardingData, macroTargets }) => {
+    set((state) => ({
+      user: state.user
+        ? {
+            ...state.user,
+            isOnboarded: true,
+            onboardingData,
+            macroTargets,
+          }
+        : state.user,
+    }))
+  },
 }))

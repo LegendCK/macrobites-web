@@ -14,8 +14,8 @@ export function HomePage() {
   }
 
   return (
-    <main className={styles.page}>
-      <section className={styles.card}>
+    <main className={[styles.page, 'fadeInUp'].join(' ')}>
+      <section className={[styles.card, 'scaleIn'].join(' ')}>
         <p className={styles.eyebrow}>Signed in</p>
         <h1 className={styles.title}>Welcome, {user?.fullName || 'MacroBites Member'}</h1>
         <p className={styles.subtitle}>

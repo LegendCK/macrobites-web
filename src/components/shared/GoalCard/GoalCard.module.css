@@ -1,0 +1,75 @@
+.card {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  position: relative;
+  background: var(--color-surface-raised);
+  text-align: left;
+}
+
+.card:hover {
+  border-color: var(--color-primary-muted);
+  box-shadow: var(--shadow-sm);
+}
+
+.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+}
+
+.image {
+  width: 100%;
+  height: 138px;
+}
+
+.goalGain {
+  background: radial-gradient(circle at 10% 10%, #3f3f46, #111827 60%);
+}
+
+.goalLose {
+  background: radial-gradient(circle at 20% 10%, #67e8f9, #0f766e 65%);
+}
+
+.goalFit {
+  background: radial-gradient(circle at 80% 20%, #34d399, #0f172a 65%);
+}
+
+.checkmark {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 28px;
+  height: 28px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.selected .checkmark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.body {
+  padding: var(--space-4);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-2);
+}
+
+.desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
