@@ -1,0 +1,265 @@
+/* src/pages/Plans/PlansPage.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  background-color: var(--color-surface);
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+}
+
+/* Billing Toggle */
+.billingToggle {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.billingButton {
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-border);
+  background-color: var(--color-white);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.billingButton:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.billingButton.active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Savings Badge */
+.savingsBadge {
+  text-align: center;
+  background-color: var(--color-warning-light);
+  color: var(--color-warning);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-6);
+  display: inline-block;
+}
+
+/* Plans Grid */
+.plansGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-12);
+}
+
+.planCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.planCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.planCard.highlighted {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+.planHeader {
+  margin-bottom: var(--space-4);
+}
+
+.planName {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-1);
+}
+
+.currency {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+}
+
+.amount {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-extrabold);
+  color: var(--color-primary);
+}
+
+.period {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: var(--space-6);
+}
+
+.feature {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+  padding-left: var(--space-4);
+  position: relative;
+}
+
+.feature::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-success);
+  font-weight: var(--weight-bold);
+}
+
+.subscribeButton {
+  width: 100%;
+  padding: var(--space-4);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.subscribeButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.planCard.highlighted .subscribeButton {
+  background-color: var(--color-dark);
+}
+
+.planCard.highlighted .subscribeButton:hover {
+  background-color: #0f1a0f;
+}
+
+/* Comparison Section */
+.comparisonSection {
+  margin-top: var(--space-12);
+}
+
+.comparisonTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
+
+.comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.tableHeader {
+  background-color: var(--color-surface-sunken);
+  padding: var(--space-4);
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tableHeader:first-child {
+  text-align: center;
+}
+
+.tableCell {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.tableCell:first-child {
+  text-align: left;
+  font-weight: var(--weight-medium);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--space-4);
+  }
+
+  .plansGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .billingToggle {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .billingButton {
+    width: 100%;
+    max-width: 200px;
+  }
+}
