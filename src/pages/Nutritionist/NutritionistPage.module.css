@@ -12,6 +12,8 @@
 .card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); box-shadow: var(--shadow-sm); transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
 .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
+.cardContent { flex-grow: 1; display: flex; flex-direction: column; gap: var(--space-4); }
+
 .topSection { display: flex; align-items: flex-start; gap: var(--space-4); }
 
 .avatar { width: 52px; height: 52px; flex-shrink: 0; border-radius: var(--radius-full); background: var(--color-primary); color: var(--color-white); display: grid; place-items: center; font-weight: var(--weight-bold); font-size: var(--text-lg); }

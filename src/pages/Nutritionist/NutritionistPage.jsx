@@ -11,30 +11,32 @@ import styles from './NutritionistPage.module.css'
 function NutritionistCard({ item, onBook, isBooked }) {
   return (
     <article className={styles.card}>
-      <div className={styles.topSection}>
-        <div className={styles.avatar} aria-hidden="true">
-          {item.avatar}
+      <div className={styles.cardContent}>
+        <div className={styles.topSection}>
+          <div className={styles.avatar} aria-hidden="true">
+            {item.avatar}
+          </div>
+          <div className={styles.info}>
+            <h3>{item.name}</h3>
+            <p className={styles.secondary}>{item.credentials} • {item.experience} experience</p>
+            <p className={styles.specialization}>
+              <HeartPulse size={14} /> {item.specializations.join(', ')}
+            </p>
+            <p className={styles.rating}>
+              <Star size={14} /> {item.rating} ({item.reviews})
+            </p>
+          </div>
         </div>
-        <div className={styles.info}>
-          <h3>{item.name}</h3>
-          <p className={styles.secondary}>{item.credentials} • {item.experience} experience</p>
-          <p className={styles.specialization}>
-            <HeartPulse size={14} /> {item.specializations.join(', ')}
-          </p>
-          <p className={styles.rating}>
-            <Star size={14} /> {item.rating} ({item.reviews})
-          </p>
-        </div>
-      </div>
 
-      <div className={styles.nextSection}>
-        <strong>Next available</strong>
-        <div className={styles.availableRow}>
-          {item.available.slice(0, 3).map((slot) => (
-            <button key={`${item.id}-${slot}`} type="button" className={styles.slotChip}>
-              <CalendarCheck size={12} /> {slot}
-            </button>
-          ))}
+        <div className={styles.nextSection}>
+          <strong>Next available</strong>
+          <div className={styles.availableRow}>
+            {item.available.slice(0, 3).map((slot) => (
+              <button key={`${item.id}-${slot}`} type="button" className={styles.slotChip}>
+                <CalendarCheck size={12} /> {slot}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
