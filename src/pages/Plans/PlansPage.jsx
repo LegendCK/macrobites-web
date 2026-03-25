@@ -4,10 +4,12 @@ import { plans, billingOptions } from '../../data/plans.js';
 import { Navbar } from '../../components/layout/Navbar/Navbar';
 import { Footer } from '../../components/layout/Footer/Footer';
 import { PageWrapper } from '../../components/layout/PageWrapper/PageWrapper';
+import { useAuthStore } from '../../store/authStore';
 import styles from './PlansPage.module.css';
 
 const PlansPage = () => {
   const [selectedBilling, setSelectedBilling] = useState('monthly');
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   const getPrice = (plan, billingId) => {
     return plan.billingCycles[billingId].price;
@@ -23,7 +25,7 @@ const PlansPage = () => {
 
   return (
     <div className={styles.container}>
-      <Navbar loggedIn={false} />
+      <Navbar loggedIn={isAuthenticated} />
       <main>
         <PageWrapper>
           <div className={styles.header}>

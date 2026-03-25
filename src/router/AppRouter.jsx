@@ -6,7 +6,8 @@ import { OnboardingPage } from '../pages/Onboarding/OnboardingPage'
 import CalendarPage from '../pages/Calendar/CalendarPage'
 import PlansPage from '../pages/Plans/PlansPage'
 import { NutritionistPage } from '../pages/Nutritionist/NutritionistPage'
-import { PlaceholderPage } from '../pages/Placeholder/PlaceholderPage'
+import { RewardsPage } from '../pages/Rewards/RewardsPage'
+import ProfilePage from '../pages/Profile/ProfilePage'
 import { OnboardingGuard } from './OnboardingGuard'
 import { ProtectedRoute } from './ProtectedRoute'
 
@@ -23,7 +24,8 @@ export function AppRouter() {
           <Route path="/meals" element={<MealsPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/nutritionist" element={<NutritionistPage />} />
-          <Route path="/rewards" element={<PlaceholderPage title="Rewards" loggedIn />} />
+          <Route path="/rewards" element={<RewardsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
         <Route element={<OnboardingGuard />}>

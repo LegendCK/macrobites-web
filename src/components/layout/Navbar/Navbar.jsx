@@ -16,6 +16,7 @@ const LOGGED_IN_LINKS = [
   { to: '/calendar', label: 'Calendar' },
   { to: '/nutritionist', label: 'Nutritionist' },
   { to: '/rewards', label: 'Rewards' },
+  { to: '/profile', label: 'Profile' },
 ]
 
 export function Navbar({ loggedIn = false }) {
