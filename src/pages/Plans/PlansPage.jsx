@@ -1,5 +1,6 @@
 // src/pages/Plans/PlansPage.jsx
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { plans, billingOptions } from '../../data/plans.js';
 import { Navbar } from '../../components/layout/Navbar/Navbar';
 import { Footer } from '../../components/layout/Footer/Footer';
@@ -8,6 +9,7 @@ import { useAuthStore } from '../../store/authStore';
 import styles from './PlansPage.module.css';
 
 const PlansPage = () => {
+  const navigate = useNavigate();
   const [selectedBilling, setSelectedBilling] = useState('monthly');
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
@@ -23,10 +25,16 @@ const PlansPage = () => {
     return billingOptions.find(opt => opt.id === billingId).discount;
   };
 
+  const handleSubscribe = () => {
+    if (!isAuthenticated) {
+      navigate('/auth');
+    }
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.page}>
       <Navbar loggedIn={isAuthenticated} />
-      <main>
+      <main className={styles.main}>
         <PageWrapper>
           <div className={styles.header}>
             <h1 className={styles.title}>Choose Your Plan</h1>
@@ -72,7 +80,7 @@ const PlansPage = () => {
                 </li>
               ))}
             </ul>
-            <button className={styles.subscribeButton}>
+            <button className={styles.subscribeButton} onClick={handleSubscribe}>
               Subscribe to {plan.name}
             </button>
           </div>

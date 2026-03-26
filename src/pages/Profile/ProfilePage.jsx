@@ -17,6 +17,7 @@ import {
   Trophy,
 } from 'lucide-react'
 import { Navbar } from '../../components/layout/Navbar/Navbar'
+import { Footer } from '../../components/layout/Footer/Footer'
 import { useProfileStore } from '../../store/profileStore'
 import { useAuthStore } from '../../store/authStore'
 import { Button } from '../../components/ui/Button/Button'
@@ -546,6 +547,7 @@ const ProfilePage = () => {
       </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }
