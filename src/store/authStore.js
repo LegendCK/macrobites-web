@@ -51,6 +51,20 @@ export const useAuthStore = create(
         }
       },
 
+      restoreSession: async () => {
+        set({ isLoading: true, error: '' })
+        try {
+          const response = await authService.getCurrentUser()
+          if (response?.user) {
+            set({ user: response.user, isAuthenticated: true, isLoading: false })
+          } else {
+            set({ user: null, isAuthenticated: false, isLoading: false })
+          }
+        } catch {
+          set({ user: null, isAuthenticated: false, isLoading: false })
+        }
+      },
+
       completeOnboarding: ({ onboardingData, macroTargets }) => {
         set((state) => ({
           user: state.user

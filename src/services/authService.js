@@ -1,36 +1,18 @@
-import { MOCK_USER } from '../data/user'
-
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+import { api } from './api.js'
 
 export const authService = {
   async register(payload) {
-    await wait(350)
-
-    return {
-      user: {
-        ...MOCK_USER,
-        fullName: payload.fullName,
-        email: payload.email,
-        isOnboarded: false,
-      },
-      token: 'mock_access_token',
-    }
+    const response = await api.post('/auth/register', payload)
+    return response.data
   },
 
   async login(payload) {
-    await wait(300)
-
-    return {
-      user: {
-        ...MOCK_USER,
-        email: payload.email,
-      },
-      token: 'mock_access_token',
-    }
+    const response = await api.post('/auth/login', payload)
+    return response.data
   },
 
   async logout() {
-    await wait(150)
-    return { success: true }
+    const response = await api.post('/auth/logout')
+    return response.data
   },
 }

@@ -1,7 +1,8 @@
 // src/pages/Plans/PlansPage.jsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { plans, billingOptions } from '../../data/plans.js';
+import { billingOptions } from '../../data/plans.js';
+import { getPlans } from '../../services/planService.js';
 import { Navbar } from '../../components/layout/Navbar/Navbar';
 import { Footer } from '../../components/layout/Footer/Footer';
 import { PageWrapper } from '../../components/layout/PageWrapper/PageWrapper';
@@ -11,19 +12,59 @@ import styles from './PlansPage.module.css';
 const PlansPage = () => {
   const navigate = useNavigate();
   const [selectedBilling, setSelectedBilling] = useState('monthly');
+  const [plans, setPlans] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
+  useEffect(() => {
+    let mounted = true
+
+    async function loadPlans() {
+      setIsLoading(true)
+      setError('')
+      try {
+        const fetchedPlans = await getPlans()
+        if (mounted) {
+          setPlans(fetchedPlans)
+        }
+      } catch {
+        if (mounted) {
+          setError('Unable to load plans at the moment.')
+        }
+      } finally {
+        if (mounted) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    loadPlans()
+
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  const getCycle = (plan, billingId) => {
+    if (!plan.billingCycles) return null
+    if (Array.isArray(plan.billingCycles)) {
+      return plan.billingCycles.find((cycle) => cycle.id === billingId)
+    }
+    return plan.billingCycles[billingId]
+  }
+
   const getPrice = (plan, billingId) => {
-    return plan.billingCycles[billingId].price;
-  };
+    return getCycle(plan, billingId)?.price ?? 0
+  }
 
   const getPeriod = (billingId) => {
-    return billingOptions.find(opt => opt.id === billingId).label.toLowerCase();
-  };
+    return billingOptions.find((opt) => opt.id === billingId).label.toLowerCase()
+  }
 
   const getSavings = (billingId) => {
-    return billingOptions.find(opt => opt.id === billingId).discount;
-  };
+    return billingOptions.find((opt) => opt.id === billingId)?.discount ?? 0
+  }
 
   const handleSubscribe = () => {
     if (!isAuthenticated) {
@@ -60,6 +101,9 @@ const PlansPage = () => {
           SAVE UP TO {getSavings(selectedBilling)}% ON {billingOptions.find(opt => opt.id === selectedBilling).label.toUpperCase()} PLANS
         </div>
       )}
+
+      {isLoading ? <p className={styles.loading}>Loading plans...</p> : null}
+      {error ? <p className={styles.error}>{error}</p> : null}
 
       {/* Plan Cards */}
       <div className={styles.plansGrid}>

@@ -91,7 +91,7 @@ export default function CalendarPage() {
           viewMonth.getFullYear(),
           viewMonth.getMonth() + 1
         );
-        setSchedules(data);
+        setSchedules(data || {});
 
         // Calculate monthly outlook
         const outlook = calculateMonthlyOutlook(data);
