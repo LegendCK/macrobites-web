@@ -4,6 +4,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import morgan from 'morgan'
+import path from 'path'
 import healthRoutes from './routes/health.js'
 import authRoutes from './routes/auth.js'
 import profileRoutes from './routes/profile.js'
@@ -19,9 +20,13 @@ const app = express()
 
 app.disable('etag')
 
-app.use(helmet())
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  })
+)
 app.use(morgan('dev'))
-app.use(express.json())
+app.use(express.json({ limit: '5mb' }))
 app.use(cookieParser())
 app.use(
   cors({
@@ -33,6 +38,8 @@ app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store')
   next()
 })
+
+app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads')))
 
 app.use('/api/health', healthRoutes)
 app.use('/api/auth', authRoutes)

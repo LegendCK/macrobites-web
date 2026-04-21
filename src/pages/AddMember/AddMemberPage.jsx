@@ -16,24 +16,85 @@ export function AddMemberPage() {
 
   const [formData, setFormData] = useState({
     name: '',
-    role: '',
-    contactInfo: '',
-    bio: '',
+    rollNumber: '',
+    year: '',
+    degree: '',
+    aboutProject: '',
+    hobbies: '',
+    certificate: '',
+    internship: '',
+    aboutAim: '',
     profilePicture: null,
+    profilePictureBase64: '',
   })
   const [previewUrl, setPreviewUrl] = useState(null) // new state for preview
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
 
+  const fileToDataUrl = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = () => reject(new Error('Unable to read the image file.'))
+      reader.readAsDataURL(file)
+    })
+
+  const loadImage = (src) =>
+    new Promise((resolve, reject) => {
+      const image = new Image()
+      image.onload = () => resolve(image)
+      image.onerror = () => reject(new Error('Unable to process the selected image.'))
+      image.src = src
+    })
+
+  const compressToBase64 = async (file) => {
+    const originalDataUrl = await fileToDataUrl(file)
+    const image = await loadImage(originalDataUrl)
+
+    const maxDimension = 500
+    const scale = Math.min(1, maxDimension / Math.max(image.width, image.height))
+    const width = Math.max(1, Math.round(image.width * scale))
+    const height = Math.max(1, Math.round(image.height * scale))
+
+    const canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+    const context = canvas.getContext('2d')
+
+    if (!context) {
+      throw new Error('Image processing is not supported in this browser.')
+    }
+
+    context.drawImage(image, 0, 0, width, height)
+    return canvas.toDataURL('image/jpeg', 0.7)
+  }
+
   const updateField = (field) => (event) => {
     setFormData((prev) => ({ ...prev, [field]: event.target.value }))
   }
 
-  const updateFile = (event) => {
+  const updateFile = async (event) => {
     const file = event.target.files[0]
-    if (file) {
-      setFormData((prev) => ({ ...prev, profilePicture: file }))
-      setPreviewUrl(URL.createObjectURL(file)) // generate preview URL
+    if (!file) {
+      setFormData((prev) => ({ ...prev, profilePicture: null, profilePictureBase64: '' }))
+      return
+    }
+
+    if (!file.type.startsWith('image/')) {
+      setError('Please select a valid image file.')
+      return
+    }
+
+    try {
+      const compressedBase64 = await compressToBase64(file)
+      setError('')
+      setFormData((prev) => ({
+        ...prev,
+        profilePicture: file,
+        profilePictureBase64: compressedBase64,
+      }))
+    } catch (processingError) {
+      setError(processingError.message || 'Unable to process selected image.')
     }
   }
 
@@ -41,20 +102,24 @@ export function AddMemberPage() {
     event.preventDefault()
     setError('')
 
-    if (!formData.name.trim() || !formData.role.trim() || !formData.contactInfo.trim()) {
-      setError('Name, role, and contact info are required.')
+    if (!formData.name.trim() || !formData.rollNumber.trim() || !formData.year.trim() || !formData.degree.trim()) {
+      setError('Name, roll number, year, and degree are required.')
       return
     }
 
     setIsSaving(true)
     try {
-      const payload = new FormData()
-      payload.append('name', formData.name)
-      payload.append('role', formData.role)
-      payload.append('contactInfo', formData.contactInfo)
-      payload.append('bio', formData.bio)
-      if (formData.profilePicture) {
-        payload.append('profilePicture', formData.profilePicture)
+      const payload = {
+        name: formData.name,
+        rollNumber: formData.rollNumber,
+        year: formData.year,
+        degree: formData.degree,
+        aboutProject: formData.aboutProject,
+        hobbies: formData.hobbies,
+        certificate: formData.certificate,
+        internship: formData.internship,
+        aboutAim: formData.aboutAim,
+        profilePictureBase64: formData.profilePictureBase64,
       }
 
       const data = await createTeamMember(payload)
@@ -81,15 +146,48 @@ export function AddMemberPage() {
               <p className={styles.eyebrow}>Team Management</p>
               <h1>
                 <UserPlus size={22} />
-                Add Member Page
+                Add Member
               </h1>
             </header>
 
             <form className={styles.form} onSubmit={onSubmit}>
               <Input id="memberName" label="Member Name" value={formData.name} onChange={updateField('name')} />
-              <Input id="memberRole" label="Role" value={formData.role} onChange={updateField('role')} />
-              <Input id="memberContact" label="Contact Info" value={formData.contactInfo} onChange={updateField('contactInfo')} />
-              <Input id="memberBio" label="Bio (Optional)" value={formData.bio} onChange={updateField('bio')} />
+              <Input id="memberRollNumber" label="Roll Number" value={formData.rollNumber} onChange={updateField('rollNumber')} />
+              <Input id="memberYear" label="Year" value={formData.year} onChange={updateField('year')} />
+              <Input id="memberDegree" label="Degree" value={formData.degree} onChange={updateField('degree')} />
+
+              <div className={styles.textareaWrap}>
+                <label htmlFor="memberAboutProject" className={styles.textareaLabel}>
+                  About Project
+                </label>
+                <textarea
+                  id="memberAboutProject"
+                  className={styles.textarea}
+                  value={formData.aboutProject}
+                  onChange={updateField('aboutProject')}
+                />
+              </div>
+
+              <Input
+                id="memberHobbies"
+                label="Hobbies (comma separated)"
+                value={formData.hobbies}
+                onChange={updateField('hobbies')}
+              />
+              <Input id="memberCertificate" label="Certificate" value={formData.certificate} onChange={updateField('certificate')} />
+              <Input id="memberInternship" label="Internship" value={formData.internship} onChange={updateField('internship')} />
+
+              <div className={styles.textareaWrap}>
+                <label htmlFor="memberAboutAim" className={styles.textareaLabel}>
+                  About Your Aim
+                </label>
+                <textarea
+                  id="memberAboutAim"
+                  className={styles.textarea}
+                  value={formData.aboutAim}
+                  onChange={updateField('aboutAim')}
+                />
+              </div>
 
               {/* Profile picture upload with preview */}
               <div className={styles.fileUpload}>
@@ -102,18 +200,14 @@ export function AddMemberPage() {
                   accept="image/*"
                   onChange={updateFile}
                 />
-                {previewUrl && (
-                  <div className={styles.preview}>
-                    <img src={previewUrl} alt="Profile Preview" className={styles.previewImage} />
-                  </div>
-                )}
+                {formData.profilePicture ? <p className={styles.fileHint}>{formData.profilePicture.name}</p> : null}
               </div>
 
               {error ? <p className={styles.error}>{error}</p> : null}
 
               <div className={styles.actions}>
                 <Button variant="secondary" onClick={() => navigate('/team/members')}>
-                  View Members Page
+                  View Members
                 </Button>
                 <Button type="submit" loading={isSaving}>
                   <Save size={16} />

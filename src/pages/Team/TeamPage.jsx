@@ -9,21 +9,21 @@ import styles from './TeamPage.module.css'
 
 const TEAM_PAGES = [
   {
-    title: 'Add Member Page',
-    text: 'Create a new team member record with role and contact details.',
+    title: 'Add Member',
+    text: 'Create a new team member record with roll number, year, degree, and profile details.',
     to: '/team/add',
     icon: PlusCircle,
     cta: 'Go to Add Member',
   },
   {
-    title: 'View Members Page',
+    title: 'View Members',
     text: 'Browse all members and pick one to inspect complete details.',
     to: '/team/members',
     icon: Users,
     cta: 'Go to View Members',
   },
   {
-    title: 'Member Details Page',
+    title: 'Member Details',
     text: 'Open full profile details for any team member from the members list.',
     to: '/team/members',
     icon: UserRoundSearch,
@@ -42,8 +42,7 @@ export function TeamPage() {
       <main className={styles.main}>
         <PageWrapper>
           <header className={styles.header}>
-            <p className={styles.eyebrow}>MacroBites Product Team</p>
-            <h1>Team Workspace</h1>
+            <h1>Team MacroBites</h1>
             <p>Manage members from one place: add members, view all members, and open detailed member profiles.</p>
           </header>
 

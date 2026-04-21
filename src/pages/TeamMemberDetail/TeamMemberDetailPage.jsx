@@ -1,4 +1,4 @@
-import { ArrowLeft, Contact, LoaderCircle, UserRound } from 'lucide-react'
+import { ArrowLeft, FileText, GraduationCap, LoaderCircle, UserRound } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Footer } from '../../components/layout/Footer/Footer'
@@ -6,7 +6,7 @@ import { Navbar } from '../../components/layout/Navbar/Navbar'
 import { PageWrapper } from '../../components/layout/PageWrapper/PageWrapper'
 import { Button } from '../../components/ui/Button/Button'
 import { useAuthStore } from '../../store/authStore'
-import { getTeamMemberById } from '../../services/teamMemberService'
+import { getTeamMemberById, resolveTeamMemberImageSource } from '../../services/teamMemberService'
 import styles from './TeamMemberDetailPage.module.css'
 
 export function TeamMemberDetailPage() {
@@ -14,10 +14,11 @@ export function TeamMemberDetailPage() {
   const { memberId } = useParams()
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
-  const [teamName, setTeamName] = useState('MacroBites Product Team')
+  const [teamName, setTeamName] = useState('Team MacroBites')
   const [member, setMember] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
+  const memberImageSrc = resolveTeamMemberImageSource(member)
 
   useEffect(() => {
     let isMounted = true
@@ -30,7 +31,7 @@ export function TeamMemberDetailPage() {
         if (!isMounted) {
           return
         }
-        setTeamName(data.teamName || 'MacroBites Product Team')
+        setTeamName(data.teamName || 'Team MacroBites')
         setMember(data.member)
       } catch (requestError) {
         if (!isMounted) {
@@ -77,28 +78,64 @@ export function TeamMemberDetailPage() {
 
             {!isLoading && !error && member ? (
               <>
+                <div className={styles.avatarWrap}>
+                  {memberImageSrc ? (
+                    <img
+                      src={memberImageSrc}
+                      alt={`${member.name} profile`}
+                      className={styles.avatar}
+                    />
+                  ) : (
+                    <div className={styles.avatarFallback}>
+                      <UserRound size={44} />
+                    </div>
+                  )}
+                </div>
+
                 <h1>{member.name}</h1>
-                <p className={styles.role}>{member.role}</p>
+                <p className={styles.role}>{member.rollNumber}</p>
+
+                <div className={styles.infoRow}>
+                  <span>
+                    <GraduationCap size={16} />
+                    Degree
+                  </span>
+                  <strong>{member.degree || 'N/A'}</strong>
+                </div>
 
                 <div className={styles.infoRow}>
                   <span>
                     <UserRound size={16} />
-                    Role
+                    Year
                   </span>
-                  <strong>{member.role}</strong>
-                </div>
-
-                <div className={styles.infoRow}>
-                  <span>
-                    <Contact size={16} />
-                    Contact
-                  </span>
-                  <strong>{member.contactInfo}</strong>
+                  <strong>{member.year || 'N/A'}</strong>
                 </div>
 
                 <div className={styles.bioCard}>
-                  <h2>About</h2>
-                  <p>{member.bio || 'No additional bio has been added for this member yet.'}</p>
+                  <h2>
+                    <FileText size={16} /> About Project
+                  </h2>
+                  <p>{member.aboutProject || 'No project details added yet.'}</p>
+                </div>
+
+                <div className={styles.bioCard}>
+                  <h2>Hobbies</h2>
+                  <p>{member.hobbiesText || 'No hobbies added yet.'}</p>
+                </div>
+
+                <div className={styles.infoRow}>
+                  <span>Certificate</span>
+                  <strong>{member.certificate || 'N/A'}</strong>
+                </div>
+
+                <div className={styles.infoRow}>
+                  <span>Internship</span>
+                  <strong>{member.internship || 'N/A'}</strong>
+                </div>
+
+                <div className={styles.bioCard}>
+                  <h2>About Your Aim</h2>
+                  <p>{member.aboutAim || 'No aim details added yet.'}</p>
                 </div>
               </>
             ) : null}

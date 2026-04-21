@@ -5,7 +5,7 @@ import { Footer } from '../../components/layout/Footer/Footer'
 import { Navbar } from '../../components/layout/Navbar/Navbar'
 import { PageWrapper } from '../../components/layout/PageWrapper/PageWrapper'
 import { Button } from '../../components/ui/Button/Button'
-import { getTeamMembers } from '../../services/teamMemberService'
+import { getTeamMembers, resolveTeamMemberImageSource } from '../../services/teamMemberService'
 import { useAuthStore } from '../../store/authStore'
 import styles from './ViewMembersPage.module.css'
 
@@ -13,7 +13,7 @@ export function ViewMembersPage() {
   const navigate = useNavigate()
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
-  const [teamName, setTeamName] = useState('MacroBites Product Team')
+  const [teamName, setTeamName] = useState('Team MacroBites')
   const [members, setMembers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -30,7 +30,7 @@ export function ViewMembersPage() {
           return
         }
 
-        setTeamName(data.teamName || 'MacroBites Product Team')
+        setTeamName(data.teamName || 'Team MacroBites')
         setMembers(data.members || [])
       } catch (requestError) {
         if (isMounted) {
@@ -65,7 +65,7 @@ export function ViewMembersPage() {
             <p className={styles.eyebrow}>{teamName}</p>
             <h1>
               <Users size={22} />
-              View Members Page
+              View Members
             </h1>
           </header>
 
@@ -81,23 +81,29 @@ export function ViewMembersPage() {
           {!isLoading && !error && members.length === 0 ? (
             <section className={styles.emptyCard}>
               <p>No members available yet.</p>
-              <Button onClick={() => navigate('/team/add')}>Go to Add Member Page</Button>
+              <Button onClick={() => navigate('/team/add')}>Go to Add Member</Button>
             </section>
           ) : null}
 
           <section className={styles.grid}>
-            {members.map((member) => (
-              <button
-                type="button"
-                key={member.id}
-                className={styles.memberCard}
-                onClick={() => navigate(`/team/members/${member.id}`)}
-              >
-                <h2>{member.name}</h2>
-                <p>{member.role}</p>
-                <span>{member.contactInfo}</span>
-              </button>
-            ))}
+            {members.map((member) => {
+              const imageSrc = resolveTeamMemberImageSource(member)
+
+              return (
+                <button
+                  type="button"
+                  key={member.id}
+                  className={styles.memberCard}
+                  onClick={() => navigate(`/team/members/${member.id}`)}
+                >
+                  {imageSrc ? <img src={imageSrc} alt={`${member.name} profile`} className={styles.memberAvatar} /> : null}
+                  <h2>{member.name}</h2>
+                  <p>{member.degree}</p>
+                  <span>{member.year}</span>
+                  <small>{member.rollNumber}</small>
+                </button>
+              )
+            })}
           </section>
         </PageWrapper>
       </main>
