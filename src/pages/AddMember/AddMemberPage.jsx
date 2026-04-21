@@ -19,8 +19,9 @@ export function AddMemberPage() {
     role: '',
     contactInfo: '',
     bio: '',
-    profilePicture: null, // new field
+    profilePicture: null,
   })
+  const [previewUrl, setPreviewUrl] = useState(null) // new state for preview
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -30,7 +31,10 @@ export function AddMemberPage() {
 
   const updateFile = (event) => {
     const file = event.target.files[0]
-    setFormData((prev) => ({ ...prev, profilePicture: file }))
+    if (file) {
+      setFormData((prev) => ({ ...prev, profilePicture: file }))
+      setPreviewUrl(URL.createObjectURL(file)) // generate preview URL
+    }
   }
 
   const onSubmit = async (event) => {
@@ -44,7 +48,6 @@ export function AddMemberPage() {
 
     setIsSaving(true)
     try {
-      // Prepare form data for upload
       const payload = new FormData()
       payload.append('name', formData.name)
       payload.append('role', formData.role)
@@ -88,7 +91,7 @@ export function AddMemberPage() {
               <Input id="memberContact" label="Contact Info" value={formData.contactInfo} onChange={updateField('contactInfo')} />
               <Input id="memberBio" label="Bio (Optional)" value={formData.bio} onChange={updateField('bio')} />
 
-              {/* New profile picture upload field */}
+              {/* Profile picture upload with preview */}
               <div className={styles.fileUpload}>
                 <label htmlFor="memberProfilePicture" className={styles.fileLabel}>
                   <ImageIcon size={16} /> Profile Picture
@@ -99,6 +102,11 @@ export function AddMemberPage() {
                   accept="image/*"
                   onChange={updateFile}
                 />
+                {previewUrl && (
+                  <div className={styles.preview}>
+                    <img src={previewUrl} alt="Profile Preview" className={styles.previewImage} />
+                  </div>
+                )}
               </div>
 
               {error ? <p className={styles.error}>{error}</p> : null}
