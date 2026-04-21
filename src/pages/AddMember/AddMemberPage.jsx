@@ -1,4 +1,4 @@
-import { ArrowLeft, Save, UserPlus } from 'lucide-react'
+import { ArrowLeft, Save, UserPlus, Image as ImageIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Footer } from '../../components/layout/Footer/Footer'
@@ -19,12 +19,18 @@ export function AddMemberPage() {
     role: '',
     contactInfo: '',
     bio: '',
+    profilePicture: null, // new field
   })
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
 
   const updateField = (field) => (event) => {
     setFormData((prev) => ({ ...prev, [field]: event.target.value }))
+  }
+
+  const updateFile = (event) => {
+    const file = event.target.files[0]
+    setFormData((prev) => ({ ...prev, profilePicture: file }))
   }
 
   const onSubmit = async (event) => {
@@ -38,7 +44,17 @@ export function AddMemberPage() {
 
     setIsSaving(true)
     try {
-      const data = await createTeamMember(formData)
+      // Prepare form data for upload
+      const payload = new FormData()
+      payload.append('name', formData.name)
+      payload.append('role', formData.role)
+      payload.append('contactInfo', formData.contactInfo)
+      payload.append('bio', formData.bio)
+      if (formData.profilePicture) {
+        payload.append('profilePicture', formData.profilePicture)
+      }
+
+      const data = await createTeamMember(payload)
       navigate(`/team/members/${data.member.id}`)
     } catch (requestError) {
       setError(requestError?.response?.data?.error || 'Unable to save member right now.')
@@ -71,6 +87,19 @@ export function AddMemberPage() {
               <Input id="memberRole" label="Role" value={formData.role} onChange={updateField('role')} />
               <Input id="memberContact" label="Contact Info" value={formData.contactInfo} onChange={updateField('contactInfo')} />
               <Input id="memberBio" label="Bio (Optional)" value={formData.bio} onChange={updateField('bio')} />
+
+              {/* New profile picture upload field */}
+              <div className={styles.fileUpload}>
+                <label htmlFor="memberProfilePicture" className={styles.fileLabel}>
+                  <ImageIcon size={16} /> Profile Picture
+                </label>
+                <input
+                  id="memberProfilePicture"
+                  type="file"
+                  accept="image/*"
+                  onChange={updateFile}
+                />
+              </div>
 
               {error ? <p className={styles.error}>{error}</p> : null}
 
