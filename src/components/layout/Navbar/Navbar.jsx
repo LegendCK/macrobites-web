@@ -6,11 +6,13 @@ import styles from './Navbar.module.css'
 
 const LOGGED_OUT_LINKS = [
   { to: '/', label: 'Home' },
+  { to: '/team', label: 'Team' },
   { to: '/plans', label: 'Plans' },
 ]
 
 const LOGGED_IN_LINKS = [
   { to: '/home', label: 'Home' },
+  { to: '/team', label: 'Team' },
   { to: '/meals', label: 'Meals' },
   { to: '/plans', label: 'Plans' },
   { to: '/calendar', label: 'Calendar' },

@@ -13,6 +13,7 @@ import onboardingRoutes from './routes/onboarding.js'
 import rewardsRoutes from './routes/rewards.js'
 import planRoutes from './routes/plans.js'
 import nutritionistRoutes from './routes/nutritionists.js'
+import teamMemberRoutes from './routes/teamMembers.js'
 
 const app = express()
 
@@ -42,6 +43,7 @@ app.use('/api/onboarding', onboardingRoutes)
 app.use('/api/rewards', rewardsRoutes)
 app.use('/api/plans', planRoutes)
 app.use('/api/nutritionists', nutritionistRoutes)
+app.use('/api/team-members', teamMemberRoutes)
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Not Found' })

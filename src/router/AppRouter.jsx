@@ -8,6 +8,10 @@ import PlansPage from '../pages/Plans/PlansPage'
 import { NutritionistPage } from '../pages/Nutritionist/NutritionistPage'
 import { RewardsPage } from '../pages/Rewards/RewardsPage'
 import ProfilePage from '../pages/Profile/ProfilePage'
+import { TeamMemberDetailPage } from '../pages/TeamMemberDetail/TeamMemberDetailPage'
+import { TeamPage } from '../pages/Team/TeamPage'
+import { AddMemberPage } from '../pages/AddMember/AddMemberPage'
+import { ViewMembersPage } from '../pages/ViewMembers/ViewMembersPage'
 import { OnboardingGuard } from './OnboardingGuard'
 import { ProtectedRoute } from './ProtectedRoute'
 
@@ -16,6 +20,10 @@ export function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage mode="logged-out" />} />
+        <Route path="/team" element={<TeamPage />} />
+        <Route path="/team/add" element={<AddMemberPage />} />
+        <Route path="/team/members" element={<ViewMembersPage />} />
+        <Route path="/team/members/:memberId" element={<TeamMemberDetailPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/plans" element={<PlansPage />} />
 

@@ -1,0 +1,67 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-surface);
+}
+
+.main {
+  padding: var(--space-10) 0 var(--space-12);
+}
+
+.wrapper {
+  max-width: 820px;
+}
+
+.backButton {
+  margin-bottom: var(--space-4);
+}
+
+.card {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.header {
+  margin-bottom: var(--space-4);
+}
+
+.eyebrow {
+  font-size: var(--text-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary-hover);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.header h1 {
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.error {
+  color: var(--color-error);
+  font-size: var(--text-sm);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 640px) {
+  .actions {
+    flex-direction: column;
+  }
+}

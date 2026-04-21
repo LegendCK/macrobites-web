@@ -1,0 +1,113 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-surface);
+}
+
+.main {
+  padding: var(--space-10) 0 var(--space-12);
+}
+
+.wrapper {
+  max-width: 840px;
+}
+
+.backButton {
+  margin-bottom: var(--space-4);
+}
+
+.card {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.eyebrow {
+  font-size: var(--text-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary-hover);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.card h1 {
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
+  font-family: var(--font-display);
+  margin-bottom: var(--space-2);
+}
+
+.role {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.infoRow {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+  gap: var(--space-3);
+}
+
+.infoRow span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+}
+
+.infoRow strong {
+  color: var(--color-text-primary);
+}
+
+.bioCard {
+  margin-top: var(--space-5);
+  background: var(--color-surface-sunken);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  padding: var(--space-4);
+}
+
+.bioCard h2 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
+}
+
+.bioCard p {
+  color: var(--color-text-secondary);
+}
+
+.loadingState {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-3);
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+.error {
+  color: var(--color-error);
+  margin-top: var(--space-3);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .infoRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
