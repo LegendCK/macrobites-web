@@ -27,7 +27,6 @@ export function AddMemberPage() {
     profilePicture: null,
     profilePictureBase64: '',
   })
-  const [previewUrl, setPreviewUrl] = useState(null) // new state for preview
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -51,7 +50,7 @@ export function AddMemberPage() {
     const originalDataUrl = await fileToDataUrl(file)
     const image = await loadImage(originalDataUrl)
 
-    const maxDimension = 500
+    const maxDimension = 320
     const scale = Math.min(1, maxDimension / Math.max(image.width, image.height))
     const width = Math.max(1, Math.round(image.width * scale))
     const height = Math.max(1, Math.round(image.height * scale))
@@ -66,7 +65,7 @@ export function AddMemberPage() {
     }
 
     context.drawImage(image, 0, 0, width, height)
-    return canvas.toDataURL('image/jpeg', 0.7)
+    return canvas.toDataURL('image/webp', 0.6)
   }
 
   const updateField = (field) => (event) => {

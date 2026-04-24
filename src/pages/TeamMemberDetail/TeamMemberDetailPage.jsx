@@ -1,4 +1,4 @@
-import { ArrowLeft, FileText, GraduationCap, LoaderCircle, UserRound } from 'lucide-react'
+import { ArrowLeft, FileText, LoaderCircle, UserRound } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Footer } from '../../components/layout/Footer/Footer'
@@ -92,12 +92,16 @@ export function TeamMemberDetailPage() {
                   )}
                 </div>
 
-                <h1>{member.name}</h1>
-                <p className={styles.role}>{member.rollNumber}</p>
+                <div className={styles.identity}>
+                  <h1>{member.name}</h1>
+                  <p className={styles.subtitle}>
+                    {member.degree || 'N/A'} - {member.year || 'N/A'}
+                  </p>
+                  <p className={styles.rollNumber}>Roll Number: {member.rollNumber}</p>
+                </div>
 
                 <div className={styles.infoRow}>
                   <span>
-                    <GraduationCap size={16} />
                     Degree
                   </span>
                   <strong>{member.degree || 'N/A'}</strong>
@@ -120,7 +124,17 @@ export function TeamMemberDetailPage() {
 
                 <div className={styles.bioCard}>
                   <h2>Hobbies</h2>
-                  <p>{member.hobbiesText || 'No hobbies added yet.'}</p>
+                  {Array.isArray(member.hobbies) && member.hobbies.length > 0 ? (
+                    <div className={styles.hobbyChips}>
+                      {member.hobbies.map((hobby) => (
+                        <span key={hobby} className={styles.hobbyChip}>
+                          {hobby}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <p>No hobbies added yet.</p>
+                  )}
                 </div>
 
                 <div className={styles.infoRow}>

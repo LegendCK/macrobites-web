@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  background: var(--color-surface);
+  background: linear-gradient(180deg, #f8fbff 0%, #eef3f9 100%);
 }
 
 .main {
@@ -8,7 +8,7 @@
 }
 
 .wrapper {
-  max-width: 840px;
+  max-width: 900px;
 }
 
 .backButton {
@@ -16,11 +16,12 @@
 }
 
 .card {
-  background: var(--color-surface-raised);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  box-shadow: var(--shadow-sm);
+  background: #ffffff;
+  border: 1px solid #d7dbe7;
+  border-radius: 10px;
+  padding: 0 0 var(--space-6);
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 
 .eyebrow {
@@ -30,51 +31,58 @@
   color: var(--color-primary-hover);
   font-weight: var(--weight-semibold);
   margin-bottom: var(--space-2);
+  text-align: center;
+  padding: var(--space-4) var(--space-6) 0;
+}
+
+.avatarWrap {
+  margin-bottom: 0;
+}
+
+.avatar,
+.avatarFallback {
+  width: 100%;
+  height: 320px;
+  display: grid;
+  place-items: center;
+  object-fit: cover;
+  background: #eef7ef;
+  border-bottom: 1px solid #d7dbe7;
+}
+
+.avatarFallback {
+  color: #9aa7b5;
+}
+
+.identity {
+  text-align: center;
+  padding: 18px 22px 10px;
 }
 
 .card h1 {
   font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
   font-family: var(--font-display);
-  margin-bottom: var(--space-2);
+  margin-bottom: 6px;
+  text-transform: lowercase;
 }
 
-.avatarWrap {
-  margin-bottom: var(--space-4);
+.subtitle {
+  color: #8a8a8a;
+  font-size: 1rem;
+  margin-bottom: 6px;
 }
 
-.avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 2px solid var(--color-border);
-  object-fit: cover;
-  background: var(--color-surface-sunken);
-}
-
-.avatarFallback {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 2px dashed var(--color-border);
-  color: var(--color-text-muted);
-  display: grid;
-  place-items: center;
-  background: var(--color-surface-sunken);
-}
-
-.role {
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-4);
+.rollNumber {
+  color: #6b7280;
+  font-weight: 600;
 }
 
 .infoRow {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid #e7ebf2;
+  padding: 12px 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-3);
   gap: var(--space-3);
 }
 
@@ -82,28 +90,48 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-text-secondary);
+  color: #4b5563;
+  font-weight: 600;
 }
 
 .infoRow strong {
-  color: var(--color-text-primary);
+  color: #111827;
 }
 
 .bioCard {
-  margin-top: var(--space-5);
-  background: var(--color-surface-sunken);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  padding: var(--space-4);
+  margin: 0 22px var(--space-4);
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #e5ebf3;
+  border-radius: 8px;
 }
 
 .bioCard h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: var(--text-lg);
-  margin-bottom: var(--space-2);
+  margin-bottom: 10px;
+  color: #222;
 }
 
 .bioCard p {
-  color: var(--color-text-secondary);
+  color: #4b5563;
+}
+
+.hobbyChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hobbyChip {
+  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  color: #fff;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .loadingState {
@@ -133,5 +161,10 @@
   .infoRow {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .avatar,
+  .avatarFallback {
+    height: 240px;
   }
 }

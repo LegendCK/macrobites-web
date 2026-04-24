@@ -1,4 +1,4 @@
-import { ArrowLeft, LoaderCircle, Users } from 'lucide-react'
+import { ArrowLeft, LoaderCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Footer } from '../../components/layout/Footer/Footer'
@@ -55,55 +55,59 @@ export function ViewMembersPage() {
       <Navbar loggedIn={isAuthenticated} />
 
       <main className={styles.main}>
-        <PageWrapper>
+        <PageWrapper className={styles.wrapper}>
+          <header className={styles.hero}>
+            <h1>MEET OUR AMAZING TEAM</h1>
+          </header>
+
           <Button variant="ghost" className={styles.backButton} onClick={() => navigate('/team')}>
             <ArrowLeft size={16} />
             Back to Team
           </Button>
 
-          <header className={styles.header}>
-            <p className={styles.eyebrow}>{teamName}</p>
-            <h1>
-              <Users size={22} />
-              View Members
-            </h1>
-          </header>
+          <section className={styles.manageCard}>
+            <p className={styles.teamName}>{teamName}</p>
 
-          {isLoading ? (
-            <div className={styles.loadingState}>
-              <LoaderCircle size={18} className={styles.spin} />
-              Loading members...
-            </div>
-          ) : null}
+            {isLoading ? (
+              <div className={styles.loadingState}>
+                <LoaderCircle size={18} className={styles.spin} />
+                Loading members...
+              </div>
+            ) : null}
 
-          {!isLoading && error ? <p className={styles.error}>{error}</p> : null}
+            {!isLoading && error ? <p className={styles.error}>{error}</p> : null}
 
-          {!isLoading && !error && members.length === 0 ? (
-            <section className={styles.emptyCard}>
-              <p>No members available yet.</p>
-              <Button onClick={() => navigate('/team/add')}>Go to Add Member</Button>
-            </section>
-          ) : null}
-
-          <section className={styles.grid}>
-            {members.map((member) => {
-              const imageSrc = resolveTeamMemberImageSource(member)
-
-              return (
-                <button
-                  type="button"
-                  key={member.id}
-                  className={styles.memberCard}
-                  onClick={() => navigate(`/team/members/${member.id}`)}
-                >
-                  {imageSrc ? <img src={imageSrc} alt={`${member.name} profile`} className={styles.memberAvatar} /> : null}
-                  <h2>{member.name}</h2>
-                  <p>{member.degree}</p>
-                  <span>{member.year}</span>
-                  <small>{member.rollNumber}</small>
+            {!isLoading && !error && members.length === 0 ? (
+              <div className={styles.emptyState}>
+                <p>No members available yet.</p>
+                <button type="button" className={styles.primaryButton} onClick={() => navigate('/team/add')}>
+                  Add Member
                 </button>
-              )
-            })}
+              </div>
+            ) : null}
+
+            <section className={styles.grid}>
+              {members.map((member) => {
+                const imageSrc = resolveTeamMemberImageSource(member)
+
+                return (
+                  <article key={member.id} className={styles.memberCard}>
+                    {imageSrc ? <img src={imageSrc} alt={`${member.name} profile`} className={styles.memberImage} /> : null}
+                    <div className={styles.memberBody}>
+                      <h3>{member.name}</h3>
+                      <p className={styles.rollNumber}>Roll Number: {member.rollNumber}</p>
+                      <button
+                        type="button"
+                        className={styles.detailsButton}
+                        onClick={() => navigate(`/team/members/${member.id}`)}
+                      >
+                        View Details
+                      </button>
+                    </div>
+                  </article>
+                )
+              })}
+            </section>
           </section>
         </PageWrapper>
       </main>
